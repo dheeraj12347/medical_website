@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Locator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    .search-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 999;
+    }
+    .search-bar input {
+      padding: 5px;
+      margin-right: 5px;
+    }
+    .search-bar button {
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="search-bar">
+    <input type="text" id="citySearch" placeholder="Enter City" />
+    <button onclick="searchHospitals()">Search</button>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map
+    const map = L.map('map').setView([51.505, -0.09], 2);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Function to get city coordinates from OpenStreetMap Nominatim API
+    async function getCityCoordinates(city) {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${city}&format=json`);
+      const data = await response.json();
+      if (data.length === 0) {
+        throw new Error("City not found.");
+      }
+      return {
+        lat: parseFloat(data[0].lat),
+        lon: parseFloat(data[0].lon)
+      };
+    }
+
+    // Simulated fetchHospitals function (replace with real API later)
+    async function fetchHospitals(city, lat, lon) {
+      // Example data (replace with real API data)
+      const mockData = {
+        "New York": [
+          { name: "City Hospital", lat: 40.7128, lon: -74.0060, address: "123 Main St, New York, NY" },
+          { name: "General Medical Center", lat: 40.7308, lon: -73.9352, address: "456 Elm St, New York, NY" }
+        ],
+        "Los Angeles": [
+          { name: "LA General Hospital", lat: 34.0522, lon: -118.2437, address: "123 Sunset Blvd, LA, CA" }
+        ],
+        "Ghaziabad":[
+          {name: "Narinder Mohan Hospital",lat: 28.655700, lon: 77.385800,address: "Mohan Nagar, Ghaziabad"}
+          ,{name: "Yashoda Super Speciality Hospital",lat: 28.670000, lon: 77.440000,address: "Nehru Nagar, Ghaziabad",}
+        ]
+      };
+      return mockData[city] || [];
+    }
+
+    // Function to search hospitals based on city
+    async function searchHospitals() {
+      const city = document.getElementById('citySearch').value.trim();
+      if (!city) {
+        alert("Please enter a city.");
+        return;
+      }
+
+      try {
+        // Step 1: Get city coordinates
+        const { lat, lon } = await getCityCoordinates(city);
+
+        // Clear previous markers
+        map.eachLayer(layer => {
+          if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+          }
+        });
+
+        // Step 2: Fetch hospitals for the city
+        const hospitals = await fetchHospitals(city, lat, lon);
+
+        if (hospitals.length === 0) {
+          alert("No hospitals found for this city.");
+          return;
+        }
+
+        // Step 3: Add hospital markers
+        hospitals.forEach(hospital => {
+          const marker = L.marker([hospital.lat, hospital.lon]).addTo(map)
+            .bindPopup(`<h3>${hospital.name}</h3><p>${hospital.address}</p>`);
+        });
+
+        // Step 4: Center the map on the first hospital
+        map.setView([hospitals[0].lat, hospitals[0].lon], 12);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  </script>
+
+</body>
+</html>

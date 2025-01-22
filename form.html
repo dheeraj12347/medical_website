@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make an Appointment</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+
+    <div id="appointment">
+        <h1>Make an Appointment</h1>
+        <form action="">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+            <label for="appointmentDate">Appointment Date</label>
+            <input type="date" id="appointmentDate" name="appointmentDate" required>
+
+            <label for="doctor">Doctor</label>
+            <select id="doctor" name="doctor">
+                <option value="Dr. Smith">Dr. Smith</option>
+                <option value="Dr. Johnson">Dr. Johnson</option>
+                <option value="Dr. Williams">Dr. Williams</option>
+            </select>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,111 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Appointment Form Container */
+#appointment {
+    background-color: #ffffff;
+    padding: 30px;
+    margin: 20px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form Input Fields */
+label {
+    display: block;
+    margin: 12px 0 5px;
+    font-size: 16px;
+    color: #495057;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 16px;
+    color: #495057;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+/* Focused Input Fields */
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+    border-color: #007bff;
+    background-color: #ffffff;
+    outline: none;
+}
+
+/* Button Styling */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:active {
+    background-color: #004085;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #appointment {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
